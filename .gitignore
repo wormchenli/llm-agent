@@ -2,3 +2,5 @@
 .venv
 
 static
+.idea
+__pycache__
