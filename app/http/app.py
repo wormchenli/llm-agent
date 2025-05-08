@@ -1,10 +1,19 @@
-from core.server import HttpServer
+import dotenv
+from flask_sqlalchemy import SQLAlchemy
+
 from injector import Injector
+
+from core.server import HttpServer
 from core.routers import Router
+from core.models.dbModule import DBModule
+from configs import Config
 
-injector = Injector()
+dotenv.load_dotenv()
 
-app = HttpServer("LLM Server", router=injector.get(Router))
+injector = Injector([DBModule])
+app_config = Config()
+
+app = HttpServer("LLM Server", config=app_config, db=injector.get(SQLAlchemy), router=injector.get(Router))
 
 if __name__ == "__main__":
     app.run(debug=True)

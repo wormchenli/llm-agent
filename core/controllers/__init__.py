@@ -1,3 +1,3 @@
-from .handlers import AppController
+from .controller import AppController
 
 __all__ = ["AppController"]

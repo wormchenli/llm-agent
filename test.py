@@ -1,20 +1,21 @@
-from injector import Injector, inject
+# Please install OpenAI SDK first: `pip3 install openai`
 
-class A:
-    name: str = "Li Chen"
+from openai import OpenAI
+from dotenv import dotenv_values
 
-class C:
-    name: str = "Zhi Chen"
+config = dotenv_values(".env")  # Load variables from .env file
 
-class B:
-    @inject
-    def __init__(self, a: A, c:C):
-        self.a = a
-        self.c = c
+api_key = config.get("API_KEY")
+base_url = config.get("BASE_URL")
 
-    def print(self):
-        print(f"Class A's name is {self.a.name}, C's name is {self.c.name}")
+client = OpenAI(api_key=api_key, base_url=base_url)
 
-injector = Injector()
-b = injector.get(B)
-b.print()
+response = client.chat.completions.create(
+    model="deepseek-chat",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant"},
+        {"role": "user", "content": "Hello"},
+    ],
+    stream=False
+)
+print(response.choices[0].message.content)
