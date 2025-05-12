@@ -25,5 +25,6 @@ class AppEntity(db.Model):
     name = Column(String(255), default="", nullable=False)
     icon = Column(String(255), default="", nullable=False)
     description = Column(Text, default="", nullable=False)
+    status = Column(String(255), default="", nullable=False)
     updated_at = Column(DateTime, default=datetime.now, nullable=False, onupdate=datetime.now)
     created_at = Column(DateTime, default=datetime.now, nullable=False, onupdate=datetime.now)

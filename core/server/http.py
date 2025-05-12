@@ -26,8 +26,8 @@ class HttpServer(Flask):
 
         # init db
         db.init_app(self)
-        with self.app_context():
-            db.create_all()
+        # with self.app_context():
+        #     db.create_all()
 
         # init migrate
         migrate.init_app(self, db, directory="core/migrations")

@@ -120,4 +120,4 @@ class AppController:
         """
         Ping the server to check if it's alive.
         """
-        return "Pong", 200
+        return {"success": True, "msg": "Pong", "data": "Pong"}, 200
