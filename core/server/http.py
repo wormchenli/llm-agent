@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_migrate import Migrate
+
 from core.routers import Router
 from configs import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -6,7 +8,14 @@ from flask_sqlalchemy import SQLAlchemy
 
 # customize a Flask class
 class HttpServer(Flask):
-    def __init__(self, *args, config: Config, db: SQLAlchemy, router: Router, **kwargs):
+    def __init__(
+            self,
+            *args,
+            config: Config,
+            db: SQLAlchemy,
+            migrate: Migrate,
+            router: Router,
+            **kwargs):
         super().__init__(*args, **kwargs)
 
         # load config
@@ -19,3 +28,6 @@ class HttpServer(Flask):
         db.init_app(self)
         with self.app_context():
             db.create_all()
+
+        # init migrate
+        migrate.init_app(self, db, directory="core/migrations")

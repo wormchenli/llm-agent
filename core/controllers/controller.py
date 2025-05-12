@@ -50,6 +50,42 @@ class AppController:
             )
             return res_body.to_response()
 
+    def update_app(self, id: uuid.UUID):
+        data = request.json
+        updated = self.app_service.update_app(id, data)
+        if updated:
+            res_body = ResponseBody(
+                status=HttpStatusCode.SUCCESS,
+                data={},
+                message="App updated successfully"
+            )
+            return res_body.to_response()
+        else:
+            res_body = ResponseBody(
+                status=HttpStatusCode.FAILURE,
+                data={},
+                message="Failed to update app"
+            )
+            return res_body.to_response()
+
+    def delete_app(self, id: uuid.UUID):
+        deleted = self.app_service.delete_app(id)
+        if deleted:
+            res_body = ResponseBody(
+                status=HttpStatusCode.SUCCESS,
+                data={},
+                message="App deleted successfully"
+            )
+            return res_body.to_response()
+        else:
+            res_body = ResponseBody(
+                status=HttpStatusCode.FAILURE,
+                data={},
+                message="Failed to delete app"
+            )
+            return res_body.to_response()
+
+    # delete
     def completion(self):
         query = request.json.get("query")
         reqValidate = CompletionRequest()

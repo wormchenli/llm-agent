@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from core.models.dbModule import db
+from core.extensions.database_extension import db
 from sqlalchemy import (
     Column,
     UUID,
