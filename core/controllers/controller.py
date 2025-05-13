@@ -114,10 +114,26 @@ class AppController:
         )
         res_data = response.choices[0].message.content
 
-        return {"success": True, "msg": "response completion successfully", "data": res_data}, 200
+        res_body = ResponseBody(
+            status=HttpStatusCode.SUCCESS,
+            data={"respond": res_data},
+            message="Model response successfully"
+        )
+        return res_body.to_response()
 
     def ping(self):
         """
         Ping the server to check if it's alive.
+            {
+                "code": 404,
+                "data": {},
+                "message": "App not found",
+                "status": "not_found"
+            }
         """
-        return {"success": True, "msg": "Pong", "data": "Pong"}, 200
+        res_body = ResponseBody(
+            status=HttpStatusCode.SUCCESS,
+            data={"respond": "Pong"},
+            message="Server is alive"
+        )
+        return res_body.to_response()
